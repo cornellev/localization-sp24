@@ -1,0 +1,6 @@
+<?xml version="1.1"?>
+
+<launch>
+    <!-- Might need to copy-paste instead of include in the future if we want to change output to log -->
+    <include file="$(find microstrain_inertial_driver)/launch/microstrain.launch"/>
+</launch>
