@@ -13,7 +13,8 @@ Eventually, the node structure will look something like this, courtesy of Ethan 
 
 # Progress Tracker
 
-- [ ] Research using our existing RTK base station with the LORD IMU
+- [x] Research using our existing RTK base station with the LORD IMU
+- [ ] First time setup - Reach M+ and Reach RS+
 
 # Usage
 
