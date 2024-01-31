@@ -1,4 +1,4 @@
-#/bin/bash
+#! /bin/bash
 
 printf "Press ENTER to confirm you are running this script on Apple Silicon in UTM..."
 read
