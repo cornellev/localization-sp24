@@ -4,8 +4,6 @@ Utku and Ethan pretend to know what they're doing
 
 # Project Structure
 
-Code is all contained in `localization_sp24`.
-
 Eventually, the node structure will look something like this, courtesy of Ethan and Rahul:
 
 ![Node structure](./images/structure-transparent-darkmode.png#gh-dark-mode-only)
