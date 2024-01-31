@@ -25,7 +25,7 @@ Just run `catkin_make` in your workspace as usual. Nothing interesting here righ
 ## Running
 
 1. Make sure you have the [microstrain_intertial](https://github.com/LORD-MicroStrain/microstrain_inertial) package installed.
-2. Run `roslaunch localization_sp24 localization.launch`
+2. Run `roslaunch localization-sp24 lord.launch` to launch LORD sensor node
 
 ## Troubleshooting
 
