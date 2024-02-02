@@ -1,7 +1,0 @@
-{
-    "C_Cpp.clang_format_style": "file",
-    "C_Cpp.default.systemIncludePath": [
-        "/usr/include",
-        "/opt/ros/noetic/include"
-    ]
-}
