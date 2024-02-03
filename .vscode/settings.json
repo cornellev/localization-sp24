@@ -1,9 +1,0 @@
-{
-    "C_Cpp.clang_format_style": "file",
-    "C_Cpp.default.systemIncludePath": [
-        "/usr/include",
-        "/opt/ros/noetic/include",
-        "/usr/lib/gcc/aarch64-linux-gnu/9/include",
-        "/usr/include/c++/9/"
-    ]
-}

@@ -17,7 +17,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/ros/noetic/include",
-                "/usr/include"
+                "/usr/include/**"
             ],
             "intelliSenseMode": "linux-gcc-x64"
         }
