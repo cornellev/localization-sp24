@@ -1,6 +1,6 @@
 <launch>
-  <node pkg="localization-sp24" type="sim_node" name="data_simulation_node" output="screen">
-    <!-- POG! -->
+  <node pkg="localization-sp24" type="sim_node" name="data_simulation_node" output="screen" clear_params="true">
+    <param name="test_data_dir" value="$(find localization-sp24)/test_data" />
   </node>
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
     <rosparam command="load" file="$(find localization-sp24)/params/sim.yaml" />
