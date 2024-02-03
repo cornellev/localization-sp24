@@ -6,7 +6,9 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/ros/noetic/include",
-                "/usr/include"
+                "/usr/include",
+                "/usr/include/aarch64-linux-gnu",
+                "/usr/include/aarch64-linux-gnu/c++/7"
             ],
             "intelliSenseMode": "linux-gcc-arm64"
         },
