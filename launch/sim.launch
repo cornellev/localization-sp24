@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="localization-sp24" type="sim_node" name="data_simulation_node">
+  <node pkg="localization-sp24" type="sim_node" name="data_simulation_node" output="screen">
     <!-- POG! -->
   </node>
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">

@@ -7,11 +7,12 @@
 // #include "../../robot_localization/include/robot_localization/"
 
 #define TEST_DATA_DIR "../test_data"
+#define TEST_DATA_FILE TEST_DATA_DIR "/SensorConnectData_raw.csv"
 
 sensor_msgs::Imu msg;
 
 int main(int argc, char** argv) {
-    std::ifstream datafile(TEST_DATA_DIR "/SensorConnectData_raw.csv");
+    std::ifstream datafile(TEST_DATA_DIR "/utku.csv");
 
     ros::init(argc, argv, "data_simulation_node");
 
@@ -24,14 +25,14 @@ int main(int argc, char** argv) {
     while (ros::ok()) {
         char comma;
         uint64_t timestamp;
-        datafile >> timestamp >> comma >> msg.orientation.x /* todo */
-            >> msg.linear_acceleration.z;
+        datafile
+            >> timestamp;  // >> comma >> msg.orientation.x /* todo */ >> comma
+                           //>> msg.linear_accele/ration.z;
 
         // chatter_pub.publish(msg);
-        std::stringstream ss;
-        ss << timestamp << '\n';
 
-        ROS_INFO("%s", ss.str());
+        ROS_INFO("%zu\n", timestamp);
+        return 0;
         ros::spinOnce();
         loop_rate.sleep();
     }
