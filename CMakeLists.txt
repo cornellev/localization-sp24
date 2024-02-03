@@ -10,6 +10,8 @@ project(localization-sp24)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  sensor_msgs
+  tf
 )
 
 add_compile_options(-std=c++11)

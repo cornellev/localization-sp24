@@ -1,11 +1,40 @@
 #include <ros/ros.h>
+#include <std_msgs/String.h>
+#include <sensor_msgs/Imu.h>
+#include <tf/tf.h>
+#include <sstream>
+#include <fstream>
+// #include "../../robot_localization/include/robot_localization/"
 
-int main(int argc, char* argv[]) {
-    // This must be called before anything else ROS-related
-    ros::init(argc, argv, "vision_node");
+#define TEST_DATA_DIR "../test_data"
 
-    // Create a ROS node handle
-    ros::NodeHandle nh;
+sensor_msgs::Imu msg;
 
-    ROS_INFO("Hello, World!");
+int main(int argc, char** argv) {
+    std::ifstream datafile(TEST_DATA_DIR "/SensorConnectData_raw.csv");
+
+    ros::init(argc, argv, "data_simulation_node");
+
+    ros::NodeHandle n;
+
+    ros::Publisher chatter_pub = n.advertise<sensor_msgs::Imu>("/car/lord_imu",
+        1000);
+    ros::Rate loop_rate(10);
+
+    while (ros::ok()) {
+        char comma;
+        uint64_t timestamp;
+        datafile >> timestamp >> comma >> msg.orientation.x /* todo */
+            >> msg.linear_acceleration.z;
+
+        // chatter_pub.publish(msg);
+        std::stringstream ss;
+        ss << timestamp << '\n';
+
+        ROS_INFO("%s", ss.str());
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
+
+    return 0;
 }
