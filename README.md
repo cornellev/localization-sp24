@@ -13,7 +13,7 @@ Eventually, the node structure will look something like this, courtesy of Ethan 
 
 # Building
 
-1. Install [microstrain_intertial](https://github.com/LORD-MicroStrain/microstrain_inertial) and [robot_localization](https://docs.ros.org/en/melodic/api/robot_localization/html/index.html).
+1. Install [microstrain_intertial](https://github.com/LORD-MicroStrain/microstrain_inertial) and [robot_localization](https://docs.ros.org/en/melodic/api/robot_localization/html/index.html). You should be able to use `rosdep`.
 2. Just run `catkin_make` in your workspace as usual.
 
 # Running
