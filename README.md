@@ -4,6 +4,8 @@ Utku and Ethan pretend to know what they're doing
 
 # Project Structure
 
+Nodes are written in `src/`.
+
 Eventually, the node structure will look something like this, courtesy of Ethan and Rahul:
 
 ![Node structure](./images/structure-transparent-darkmode.png#gh-dark-mode-only)
@@ -18,12 +20,18 @@ Eventually, the node structure will look something like this, courtesy of Ethan 
 
 ## Building
 
-Just run `catkin_make` in your workspace as usual. Nothing interesting here right now.
+Just run `catkin_make` in your workspace as usual.
+Nothing interesting here right now.
 
 ## Running
 
 1. Make sure you have the [microstrain_intertial](https://github.com/LORD-MicroStrain/microstrain_inertial) package installed.
 2. Run `roslaunch localization-sp24 lord.launch` to launch LORD sensor node
+
+### OR: If UTM On Apple Silicon
+
+Run `run_utm_silicon.sh` (you may need to `chmod`).
+This may circumvent all troubleshooting issues.
 
 ## Troubleshooting
 
