@@ -139,7 +139,6 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/localization-sp24_node.cpp)
 
 add_executable(sim_node src/sim_node.cpp)
-target_link_libraries(sim_node ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -155,6 +154,8 @@ target_link_libraries(sim_node ${catkin_LIBRARIES})
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+
+target_link_libraries(sim_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##

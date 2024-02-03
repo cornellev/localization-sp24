@@ -11,35 +11,36 @@ Eventually, the node structure will look something like this, courtesy of Ethan 
 ![Node structure](./images/structure-transparent-darkmode.png#gh-dark-mode-only)
 ![Node structure](./images/structure-transparent-lightmode.png#gh-light-mode-only)
 
-# Progress Tracker
+# Building
 
-- [x] Research using our existing RTK base station with the LORD IMU
-- [ ] First time setup - Reach M+ and Reach RS+
+1. Install [microstrain_intertial](https://github.com/LORD-MicroStrain/microstrain_inertial) and [robot_localization](https://docs.ros.org/en/melodic/api/robot_localization/html/index.html).
+2. Just run `catkin_make` in your workspace as usual.
 
-# Usage
+# Running
 
-## Building
+## LORD Sensor Reader
 
-Just run `catkin_make` in your workspace as usual.
-Nothing interesting here right now.
-
-## Running
-
-1. Make sure you have the [microstrain_intertial](https://github.com/LORD-MicroStrain/microstrain_inertial) package installed.
-2. Run `roslaunch localization-sp24 lord.launch` to launch LORD sensor node
+`lord.launch` can help you verify that the LORD sensor is working correctly. To run it, use `roslaunch localization-sp24 lord.launch`.
 
 ### OR: If UTM On Apple Silicon
 
 Run `run_utm_silicon.sh` (you may need to `chmod`).
 This may circumvent all troubleshooting issues.
 
-## Troubleshooting
+## Sensor Simulator
 
-- If, upon launching, you get a permission error saying the USB port can't be opened, try giving your user read and write permissions:
+This node simulates running the LORD sensor from data recorded in a CSV. You can modify the CSV within `test_data` that it reads from within `sim_node.cpp`. You will have to rebuild.
+
+-   To run just the simulator node, use `rosrun localization-sp24 sim_node _test_data_dir:=/path/to/test/data`.
+-   To run both the simulator node and robot_localization, just use `roslaunch localization-sp24 sim.launch`. You can change `test_data_dir` from within `sim.launch`.
+
+# Troubleshooting
+
+-   If, upon launching, you get a permission error saying the USB port can't be opened, try giving your user read and write permissions:
 
 ```bash
 sudo usermod -a -G dialout $USER
 sudo chmod a+rw /dev/ttyACM0
 ```
 
-- If the port can't be opened at all, make sure the device is forwarded properly (if using a VM). You may also try to [change the expected device port](https://github.com/LORD-MicroStrain/microstrain_inertial?tab=readme-ov-file#run-instructions) using a params file for the `microstrain_intertial_driver` node.
+-   If the port can't be opened at all, make sure the device is forwarded properly (if using a VM). You may also try to [change the expected device port](https://github.com/LORD-MicroStrain/microstrain_inertial?tab=readme-ov-file#run-instructions) using a params file for the `microstrain_intertial_driver` node.
