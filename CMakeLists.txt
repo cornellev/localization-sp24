@@ -10,12 +10,11 @@ project(localization-sp24)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  sensor_msgs
+  tf
 )
 
 add_compile_options(-std=c++11)
-
-add_executable(sim_node src/sim_node.cpp)
-target_link_libraries(sim_node ${catkin_LIBRARIES})
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -138,6 +137,9 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/localization-sp24_node.cpp)
+
+add_executable(sim_node src/sim_node.cpp)
+target_link_libraries(sim_node ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
