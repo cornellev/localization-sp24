@@ -4,7 +4,7 @@
     </node>
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
         <rosparam command="load" file="$(find localization-sp24)/params/sim.yaml" />
-        <remap from="odometry/filtered" to="/ekf/output" />
+        <remap from="odometry/filtered" to="/rahul/jason" />
     </node>
-    <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot" args="/ekf/output/pose/pose/position/x:y:z"/>
+    <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot" args="/rahul/jason/pose/pose/orientation/z:w"/>
 </launch>
