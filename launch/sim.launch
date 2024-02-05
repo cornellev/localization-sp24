@@ -1,9 +1,10 @@
 <launch>
-  <node pkg="localization-sp24" type="sim_node" name="data_simulation_node" output="screen" clear_params="true">
-    <param name="test_data_dir" value="$(find localization-sp24)/test_data" />
-  </node>
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
-    <rosparam command="load" file="$(find localization-sp24)/params/sim.yaml" />
-    <remap from="odometry/filtered" to="/rahul/jason" />
-  </node>
+    <node pkg="localization-sp24" type="sim_node" name="data_simulation_node" output="screen" clear_params="true">
+        <param name="test_data_dir" value="$(find localization-sp24)/test_data" />
+    </node>
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+        <rosparam command="load" file="$(find localization-sp24)/params/sim.yaml" />
+        <remap from="odometry/filtered" to="/rahul/jason" />
+    </node>
+    <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot" args="/rahul/jason/pose/pose/orientation/z:w"/>
 </launch>
