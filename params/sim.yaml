@@ -34,7 +34,7 @@ print_diagnostics: true
 debug: false
 
 # Defaults to "robot_localization_debug.txt" if unspecified. Please specify the full path.
-debug_out_file: /path/to/debug/file.txt
+# debug_out_file: 
 
 # Whether to broadcast the transformation over the /tf topic. Defaults to true if unspecified.
 publish_tf: true
@@ -69,7 +69,7 @@ odom_frame: odom            # Defaults to "odom" if unspecified
 base_link_frame: base_link  # Defaults to "base_link" if unspecified
 world_frame: odom           # Defaults to the value of odom_frame if unspecified
 
-imu0: car/lord_imu
+imu0: /car/lord_imu
 imu0_config: [false, false, false,
               false, false, true,
               false, false, false,

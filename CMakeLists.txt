@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   sensor_msgs
-  tf
+  tf2
 )
 
 add_compile_options(-std=c++11)
