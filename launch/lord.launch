@@ -1,6 +1,11 @@
 <?xml version="1.1"?>
 
 <launch>
-    <!-- Might need to copy-paste instead of include in the future if we want to change output to log -->
-    <include file="$(find microstrain_inertial_driver)/launch/microstrain.launch"/>
+    <node name="microstrain_inertial_driver" pkg="microstrain_inertial_driver" type="microstrain_inertial_driver_node" ns="/">
+        <rosparam file="$(find microstrain_inertial_driver)/microstrain_inertial_driver_common/config/params.yml" command="load" />
+    </node>
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+        <rosparam command="load" file="$(find localization-sp24)/params/lord.yaml" />
+    </node>
+    <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot" args="/odometry/filtered/pose/pose/position"/> 
 </launch>
