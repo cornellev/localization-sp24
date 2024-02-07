@@ -140,6 +140,8 @@ include_directories(
 
 add_executable(sim_node src/sim_node.cpp)
 target_link_libraries(sim_node ${catkin_LIBRARIES})
+add_executable(integrate_x_node src/integrate_x.cpp)
+target_link_libraries(integrate_x_node ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

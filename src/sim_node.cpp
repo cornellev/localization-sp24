@@ -19,7 +19,7 @@
 #define NODE_NAME "data_simulation_node"
 
 /* The name of the topic that the node publishes to, consistent with
- * params/sim.yaml. */
+ * config/sim.yaml. */
 #define OUTPUT_TOPIC "/car/lord_imu"
 
 /* Location of non-header CSV file. The code will be hardcoded to parse the
