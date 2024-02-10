@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(localization_sp24)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -13,8 +13,6 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   tf2
 )
-
-add_compile_options(-std=c++11)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -116,11 +114,16 @@ catkin_package(
 ## Build ##
 ###########
 
+link_directories(/usr/share/c++-mscl)
+
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  /usr/share/c++-mscl/source
+  # Not including Boost for now, prevents other things from building.
+  # Might be a duplicate issue. Come back to this if necessary.
 )
 
 ## Declare a C++ library
@@ -140,8 +143,12 @@ include_directories(
 
 add_executable(sim_node src/sim_node.cpp)
 target_link_libraries(sim_node ${catkin_LIBRARIES})
+
 add_executable(remove_gravity_node src/remove_gravity.cpp)
 target_link_libraries(remove_gravity_node ${catkin_LIBRARIES})
+
+add_executable(driver src/driver.cpp)
+target_link_libraries(driver ${catkin_LIBRARIES} mscl pthread)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
