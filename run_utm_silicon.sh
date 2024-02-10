@@ -13,4 +13,4 @@ if [[ -z $(ls /dev | grep ACM0) ]]; then
 fi
 sudo chmod a+rw /dev/ttyACM0
 source devel/setup.bash
-roslaunch localization-sp24 lord.launch
+roslaunch localization_sp24 lord.launch

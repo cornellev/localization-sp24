@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(localization-sp24)
+project(localization_sp24)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -107,8 +107,8 @@ add_compile_options(-std=c++11)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES localization-sp24
- CATKIN_DEPENDS roscpp std_msgs
+#  LIBRARIES localization_sp24
+ CATKIN_DEPENDS roscpp std_msgs sensor_msgs tf2
 #  DEPENDS system_lib
 )
 
@@ -125,7 +125,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/localization-sp24.cpp
+#   src/${PROJECT_NAME}/localization_sp24.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -136,7 +136,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/localization-sp24_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/localization_sp24_node.cpp)
 
 add_executable(sim_node src/sim_node.cpp)
 target_link_libraries(sim_node ${catkin_LIBRARIES})
@@ -205,7 +205,7 @@ target_link_libraries(remove_gravity_node ${catkin_LIBRARIES})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_localization-sp24.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_localization_sp24.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

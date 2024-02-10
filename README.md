@@ -1,4 +1,4 @@
-# localization-sp24
+# localization_sp24
 
 Utku and Ethan pretend to know what they're doing
 
@@ -26,7 +26,7 @@ Nothing interesting here right now.
 ## Running
 
 1. Make sure you have the [microstrain_intertial](https://github.com/LORD-MicroStrain/microstrain_inertial) package installed.
-2. Run `roslaunch localization-sp24 lord.launch` to launch LORD sensor node
+2. Run `roslaunch localization_sp24 lord.launch` to launch LORD sensor node
 
 ### OR: If UTM On Apple Silicon
 

@@ -2,13 +2,13 @@
 
 <launch>
     <node name="microstrain_inertial_driver" pkg="microstrain_inertial_driver" type="microstrain_inertial_driver_node" ns="/">
-        <rosparam file="$(find localization-sp24)/config/gx5-45.yaml" command="load" />
+        <rosparam file="$(find localization_sp24)/config/gx5-45.yaml" command="load" />
     </node>
     <node pkg="tf" type="static_transform_publisher" name="base_link_gx5_45_link_static_transform"
         output="screen" args="0 0 0 0 0 0 base_link gx5_45_link 100" />
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se">
-        <rosparam command="load" file="$(find localization-sp24)/config/lord.yaml" />
+        <rosparam command="load" file="$(find localization_sp24)/config/lord.yaml" />
     </node>
     <!-- <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot" args="/odometry/filtered/pose/pose/position"/>  -->
-    <!-- <node pkg="localization-sp24" type="integrate_x_node" name="integrator" output="screen" clear_config="true" /> -->
+    <!-- <node pkg="localization_sp24" type="integrate_x_node" name="integrator" output="screen" clear_config="true" /> -->
 </launch>
