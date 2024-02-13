@@ -17,7 +17,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/ros/noetic/include",
-                "/usr/include"
+                "/usr/include",
+                "/usr/share/c++-mscl/source"
             ],
             "intelliSenseMode": "linux-gcc-x64"
         }
