@@ -59,16 +59,23 @@ int main(int argc, char** argv) {
     ros::Rate loop_rate(100);
     auto publisher = n.advertise<sensor_msgs::Imu>("/imu/data", 100);
 
-    sensor_msgs::Imu imu_msg;
-
     while (ros::ok()) {
         mscl::MipDataPackets packets =
             node.getDataPackets(500);  // 500 ms timeout (might need to be more
                                        // like 10 to keep loop rate)
 
         for (mscl::MipDataPacket packet: packets) {
-            imu_msg.header.stamp = ros::Time(0,
-                packet.collectedTimestamp().nanoseconds());
+            sensor_msgs::Imu imu_msg;
+
+            imu_msg.header.frame_id = "gx5_45_link";
+
+            auto stamp =
+                packet.collectedTimestamp();  // we don't have device time
+
+            uint64_t leftover_nanos = stamp.nanoseconds()
+                                      - stamp.seconds() * (uint64_t)1e9;
+            auto computed_time = ros::Time(stamp.seconds(), leftover_nanos);
+            imu_msg.header.stamp = computed_time;
 
             // get all of the points in the packet
             mscl::MipDataPoints points = packet.data();
@@ -105,9 +112,9 @@ int main(int argc, char** argv) {
                     imu_msg.orientation.z = q.as_floatAt(2);
                     imu_msg.orientation.w = q.as_floatAt(3);
                 }
-            }
 
-            publisher.publish(imu_msg);
+                publisher.publish(imu_msg);
+            }
         }
 
         loop_rate.sleep();

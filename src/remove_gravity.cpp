@@ -28,10 +28,8 @@ int main(int argc, char** argv) {
 
     ros::NodeHandle n("~");
 
-    ROS_INFO("Start");
-
     ros::Subscriber sub = n.subscribe("/imu/data", 1, remove_gravity);
-    ros::Publisher pub = n.advertise<sensor_msgs::Imu>("/imu/accel_removed", 1);
+    ros::Publisher pub = n.advertise<sensor_msgs::Imu>("/imu/grav_removed", 1);
 
     ros::Rate rate = ros::Rate(100);
 

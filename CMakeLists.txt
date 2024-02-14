@@ -147,8 +147,8 @@ target_link_libraries(sim_node ${catkin_LIBRARIES})
 add_executable(remove_gravity_node src/remove_gravity.cpp)
 target_link_libraries(remove_gravity_node ${catkin_LIBRARIES})
 
-add_executable(driver src/driver.cpp)
-target_link_libraries(driver ${catkin_LIBRARIES} mscl pthread)
+add_executable(driver_node src/driver.cpp)
+target_link_libraries(driver_node ${catkin_LIBRARIES} mscl pthread)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
