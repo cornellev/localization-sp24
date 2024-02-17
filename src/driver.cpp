@@ -3,17 +3,119 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Imu.h>
 #include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
 float g = 9.80665;
+
+sensor_msgs::Imu imu_msg;
+
+tf2::Quaternion ned_to_enu(tf2::Quaternion q) {
+    // I think this is correct, but I need to read on quaternion math to see if
+    // I can do this properly instead of just guessing at how it's meant to work
+    // by looking at Euler Angles.
+    double yaw, pitch, roll;
+    tf2::Matrix3x3(q).getEulerYPR(yaw, pitch, roll);
+
+    // https://answers.ros.org/question/336814/how-to-change-ned-to-enu/
+    auto ret = tf2::Quaternion();
+    ret.setRPY(roll, -pitch, M_PI_2 - yaw);
+
+    return ret;
+}
+
+void processPacket(mscl::MipDataPacket packet) {
+    imu_msg.header.frame_id = "gx5_45_link";
+
+    imu_msg.linear_acceleration_covariance[0] = 1;
+    imu_msg.linear_acceleration_covariance[4] = 1;
+    imu_msg.linear_acceleration_covariance[8] = 1;
+
+    imu_msg.angular_velocity_covariance[0] = 1;
+    imu_msg.angular_velocity_covariance[4] = 1;
+    imu_msg.angular_velocity_covariance[8] = 1;
+
+    imu_msg.orientation_covariance[0] = 1;
+    imu_msg.orientation_covariance[4] = 1;
+    imu_msg.orientation_covariance[8] = 1;
+
+    auto stamp = packet.collectedTimestamp();  // we don't have device time
+
+    uint64_t leftover_nanos = stamp.nanoseconds()
+                              - stamp.seconds() * (uint64_t)1e9;
+    auto computed_time = ros::Time(stamp.seconds(), leftover_nanos);
+    imu_msg.header.stamp = computed_time;
+
+    // get all of the points in the packet
+    mscl::MipDataPoints points = packet.data();
+
+    for (mscl::MipDataPoint point: points) {
+        if (point.channelName() == "scaledAccelX") {
+            imu_msg.linear_acceleration.x = point.as_float() * g;
+        }
+
+        if (point.channelName() == "scaledAccelY") {
+            imu_msg.linear_acceleration.y = point.as_float() * g;
+        }
+
+        if (point.channelName() == "scaledAccelZ") {
+            // IMU gives negated z for some reason, inconsistent with the
+            // right-hand rule
+            imu_msg.linear_acceleration.z = -point.as_float() * g;
+        }
+
+        if (point.channelName() == "scaledGyroX") {
+            imu_msg.angular_velocity.x = point.as_float();
+        }
+
+        if (point.channelName() == "scaledGyroY") {
+            imu_msg.angular_velocity.y = point.as_float();
+        }
+
+        if (point.channelName() == "scaledGyroZ") {
+            imu_msg.angular_velocity.z = point.as_float();
+        }
+
+        if (point.channelName() == "orientQuaternion") {
+            auto q_sensor = point.as_Vector();
+            auto q = tf2::Quaternion(q_sensor.as_floatAt(1),
+                q_sensor.as_floatAt(2), q_sensor.as_floatAt(3),
+                q_sensor.as_floatAt(0));  // Pretty sure the sensor outputs wxyz
+            imu_msg.orientation = tf2::toMsg(ned_to_enu(q));
+        }
+    }
+}
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "driver");
 
-    auto connection = mscl::Connection::Serial("/dev/ttyACM0");
+    ros::NodeHandle n("~");
+
+    ROS_INFO("Connecting to IMU...");
+
+    mscl::Connection connection;
+    try {
+        connection = mscl::Connection::Serial("/dev/ttyACM0");
+    } catch (mscl::Error_Connection& e) {
+        ROS_ERROR("Failed to connect to IMU. Do you have read/write access?");
+        return 1;
+    }
 
     mscl::InertialNode node(connection);
 
-    bool success = node.ping();
+    ROS_INFO("Attempting to ping IMU...");
+    ros::Duration ping_timeout = ros::Duration(5);
+    ros::Time start = ros::Time::now();
+    ros::Rate ping_rate = ros::Rate(5);
+    bool success = false;
+
+    while (ros::Time::now() - start < ping_timeout) {
+        success = node.ping();
+        if (success) break;
+
+        ping_rate.sleep();
+    }
+
     if (!success) {
         ROS_ERROR("Failed to communicate with the IMU. Exiting.");
         return 1;
@@ -45,7 +147,7 @@ int main(int argc, char** argv) {
     };
 
     for (auto& filter: low_pass_config) {
-        filter.applyLowPassFilter = false;
+        filter.applyLowPassFilter = true;
     }
 
     node.setLowPassFilterSettings(low_pass_config);
@@ -53,8 +155,6 @@ int main(int argc, char** argv) {
 
     node.enableDataStream(mscl::MipTypes::CLASS_AHRS_IMU);
     ROS_INFO("Enabled data streaming for AHRS/IMU.");
-
-    ros::NodeHandle n("~");
 
     ros::Rate loop_rate(100);
     auto publisher = n.advertise<sensor_msgs::Imu>("/imu/data", 100);
@@ -65,56 +165,8 @@ int main(int argc, char** argv) {
                                        // like 10 to keep loop rate)
 
         for (mscl::MipDataPacket packet: packets) {
-            sensor_msgs::Imu imu_msg;
-
-            imu_msg.header.frame_id = "gx5_45_link";
-
-            auto stamp =
-                packet.collectedTimestamp();  // we don't have device time
-
-            uint64_t leftover_nanos = stamp.nanoseconds()
-                                      - stamp.seconds() * (uint64_t)1e9;
-            auto computed_time = ros::Time(stamp.seconds(), leftover_nanos);
-            imu_msg.header.stamp = computed_time;
-
-            // get all of the points in the packet
-            mscl::MipDataPoints points = packet.data();
-
-            for (mscl::MipDataPoint point: points) {
-                if (point.channelName() == "scaledAccelX") {
-                    imu_msg.linear_acceleration.x = point.as_float() * g;
-                }
-
-                if (point.channelName() == "scaledAccelY") {
-                    imu_msg.linear_acceleration.y = point.as_float() * g;
-                }
-
-                if (point.channelName() == "scaledAccelZ") {
-                    imu_msg.linear_acceleration.z = point.as_float() * g;
-                }
-
-                if (point.channelName() == "scaledGyroX") {
-                    imu_msg.angular_velocity.x = point.as_float();
-                }
-
-                if (point.channelName() == "scaledGyroY") {
-                    imu_msg.angular_velocity.y = point.as_float();
-                }
-
-                if (point.channelName() == "scaledGyroZ") {
-                    imu_msg.angular_velocity.z = point.as_float();
-                }
-
-                if (point.channelName() == "orientQuaternion") {
-                    auto q = point.as_Vector();
-                    imu_msg.orientation.x = q.as_floatAt(0);
-                    imu_msg.orientation.y = q.as_floatAt(1);
-                    imu_msg.orientation.z = q.as_floatAt(2);
-                    imu_msg.orientation.w = q.as_floatAt(3);
-                }
-
-                publisher.publish(imu_msg);
-            }
+            processPacket(packet);
+            publisher.publish(imu_msg);
         }
 
         loop_rate.sleep();

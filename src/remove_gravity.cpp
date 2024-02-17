@@ -16,7 +16,7 @@ void remove_gravity(const sensor_msgs::Imu::ConstPtr& msg) {
     tf2::Vector3 a = tf2::Vector3(msg->linear_acceleration.x,
         msg->linear_acceleration.y, msg->linear_acceleration.z);
 
-    tf2::Vector3 rotated = quatRotate(q, a) - tf2::Vector3(0, 0, 9.81);
+    tf2::Vector3 rotated = quatRotate(q, a) - tf2::Vector3(0, 0, 9.80665);
 
     removed.linear_acceleration.x = rotated.x();
     removed.linear_acceleration.y = rotated.y();

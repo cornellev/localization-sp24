@@ -150,6 +150,12 @@ target_link_libraries(remove_gravity_node ${catkin_LIBRARIES})
 add_executable(driver_node src/driver.cpp)
 target_link_libraries(driver_node ${catkin_LIBRARIES} mscl pthread)
 
+add_executable(imu_faker_node src/faker/imu.cpp)
+target_link_libraries(imu_faker_node ${catkin_LIBRARIES})
+
+add_executable(odom_faker_node src/faker/odom.cpp)
+target_link_libraries(odom_faker_node ${catkin_LIBRARIES})
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
