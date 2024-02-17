@@ -26,7 +26,7 @@ permit_corrected_publication: false
 
 base_link_frame: base_link  # Defaults to "base_link" if unspecified
 
-imu0: /fake/imu
+imu0: /imu/data
 imu0_config: [false, false, false, # x, y, z
               false, false, false, # r, p, y
               false, false, false, # vx, vy, vz
@@ -34,7 +34,7 @@ imu0_config: [false, false, false, # x, y, z
               true, true, false] # ax, ay, az
 imu0_remove_gravitational_acceleration: false
 
-odom0: /fake/odom
+odom0: /odom/data
 odom0_config: [true,  true,  false, # x, y, z
                false, false, false, # r, p, y
                false, false, false, # vx, vy, vz

@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle n("~");
 
     ros::Rate loop_rate(100);
-    auto publisher = n.advertise<nav_msgs::Odometry>("/fake/odom", 100);
+    auto publisher = n.advertise<nav_msgs::Odometry>("/odom/data", 100);
 
     double mean = 0;
     double stddev = 0.1;

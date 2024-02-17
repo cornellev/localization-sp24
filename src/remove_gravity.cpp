@@ -5,9 +5,11 @@
 
 bool started;
 sensor_msgs::Imu removed;
+double g = 9.81947;
 
 // low pass filter, madgwack, complimentary, ekf, moving averages, exponential
 // moving averages
+// https://stackoverflow.com/questions/18252692/gravity-compensation-in-accelerometer-data
 void remove_gravity(const sensor_msgs::Imu::ConstPtr& msg) {
     removed = *msg;
 
@@ -16,7 +18,7 @@ void remove_gravity(const sensor_msgs::Imu::ConstPtr& msg) {
     tf2::Vector3 a = tf2::Vector3(msg->linear_acceleration.x,
         msg->linear_acceleration.y, msg->linear_acceleration.z);
 
-    tf2::Vector3 rotated = quatRotate(q, a) - tf2::Vector3(0, 0, 9.80665);
+    tf2::Vector3 rotated = quatRotate(q, a) - tf2::Vector3(0, 0, g);
 
     removed.linear_acceleration.x = rotated.x();
     removed.linear_acceleration.y = rotated.y();
@@ -24,11 +26,11 @@ void remove_gravity(const sensor_msgs::Imu::ConstPtr& msg) {
 }
 
 int main(int argc, char** argv) {
-    ros::init(argc, argv, "integrator");
+    ros::init(argc, argv, "remove_gravity");
 
     ros::NodeHandle n("~");
 
-    ros::Subscriber sub = n.subscribe("/imu/data", 1, remove_gravity);
+    ros::Subscriber sub = n.subscribe("/imu/data", 100, remove_gravity);
     ros::Publisher pub = n.advertise<sensor_msgs::Imu>("/imu/grav_removed", 1);
 
     ros::Rate rate = ros::Rate(100);

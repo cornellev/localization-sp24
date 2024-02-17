@@ -6,7 +6,7 @@
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
-float g = 9.80665;
+float g = 9.81947;
 
 sensor_msgs::Imu imu_msg;
 

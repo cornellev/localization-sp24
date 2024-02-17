@@ -3,7 +3,7 @@
 #include <sensor_msgs/Imu.h>
 #include <random>
 
-float g = 9.80665;
+float g = 9.81947;
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "faker");
@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle n("~");
 
     ros::Rate loop_rate(100);
-    auto publisher = n.advertise<sensor_msgs::Imu>("/fake/imu", 100);
+    auto publisher = n.advertise<sensor_msgs::Imu>("/imu/data", 100);
 
     double mean = 0.0;
     double stddev = 0.1;
@@ -33,6 +33,23 @@ int main(int argc, char** argv) {
         imu_msg.linear_acceleration_covariance[0] = variance;
         imu_msg.linear_acceleration_covariance[4] = variance;
         imu_msg.linear_acceleration_covariance[8] = variance;
+
+        imu_msg.angular_velocity.x = 0;
+        imu_msg.angular_velocity.y = 0;
+        imu_msg.angular_velocity.z = 0;
+
+        imu_msg.angular_velocity_covariance[0] = variance;
+        imu_msg.angular_velocity_covariance[4] = variance;
+        imu_msg.angular_velocity_covariance[8] = variance;
+
+        imu_msg.orientation.x = 0;
+        imu_msg.orientation.y = 0;
+        imu_msg.orientation.z = 0;
+        imu_msg.orientation.w = 1;
+
+        imu_msg.orientation_covariance[0] = variance;
+        imu_msg.orientation_covariance[4] = variance;
+        imu_msg.orientation_covariance[8] = variance;
 
         publisher.publish(imu_msg);
 
