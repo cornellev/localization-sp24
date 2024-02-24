@@ -9,13 +9,14 @@ add_compile_options(-std=c++11)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  rospy
   std_msgs
   sensor_msgs
   tf2
 )
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -155,6 +156,9 @@ target_link_libraries(imu_faker_node ${catkin_LIBRARIES})
 
 add_executable(odom_faker_node src/faker/odom.cpp)
 target_link_libraries(odom_faker_node ${catkin_LIBRARIES})
+
+catkin_install_python(PROGRAMS src/map.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

@@ -3,5 +3,13 @@
         "string": "cpp",
         "sstream": "cpp",
         "regex": "cpp"
-    }
+    },
+    "python.autoComplete.extraPaths": [
+        "../../../devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "../../../devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ]
 }

@@ -43,3 +43,6 @@ sudo chmod a+rw /dev/ttyACM0
 ```
 
 - If the port can't be opened at all, make sure the device is forwarded properly (if using a VM). You may also try to [change the expected device port](https://github.com/LORD-MicroStrain/microstrain_inertial?tab=readme-ov-file#run-instructions) using a params file for the `microstrain_intertial_driver` node.
+
+TODO: document new things, as well as new python dependencies: geopandas, osmnx, matplotlib
+Document how to set up map thing
