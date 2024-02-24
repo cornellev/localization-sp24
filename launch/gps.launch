@@ -1,7 +1,7 @@
 <?xml version="1.1"?>
 
 <launch>
-    <node pkg="rosbag" type="play" name="rosbag_play" output="screen"
+    <node pkg="rosbag" type="play" name="rosbag_play"
         args="--clock $(find localization_sp24)/bags/gnss.bag">
     </node>
 

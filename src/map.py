@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 client: googlemaps.Client = None
-current_image: Image = None
+current_image = None
 
 def download_area(center: Tuple[float, float]):
     global current_image
@@ -17,14 +17,14 @@ def download_area(center: Tuple[float, float]):
 
     b = io.BytesIO()
 
-    for chunk in client.static_map(size=size, center=center, zoom=15):
+    for chunk in client.static_map(size=size, center=center, zoom=15,
+                                   maptype='satellite', format='png'):
         if chunk:
             b.write(chunk)
 
-    current_image = Image.open(b)
-    img = np.asarray(current_image)
-    plt.imshow(img)
-    plt.show()
+    img = Image.open(b)
+    img = img.convert('RGB')
+    current_image = np.asarray(img)
 
 
 def callback(data: NavSatFix):
