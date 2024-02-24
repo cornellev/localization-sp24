@@ -36,11 +36,9 @@ filter_relative_position_source : 2
 # This device only supports sending IMU data at 500 hertz
 imu_data_rate : 500
 
-# The default is to publish LLH position and velocity, but rviz has a hard time displaying that.
-# Instead we will publish the position in the ECEF frame
-gnss1_llh_position_data_rate   : 0
-gnss1_velocity_data_rate       : 0
-gnss1_odometry_earth_data_rate : 2
+gnss1_llh_position_data_rate   : 4
+gnss1_velocity_data_rate       : 4
+gnss1_odometry_earth_data_rate : 0
 
 # We will only publish the odometry messages from the filter in this example.
 # Also publish the human readable message which can be echoed from the command line

@@ -4,7 +4,6 @@
     <node name="microstrain_inertial_driver" pkg="microstrain_inertial_driver" type="microstrain_inertial_driver_node" ns="/">
         <rosparam file="$(find localization_sp24)/config/gx5-45.yaml" command="load" />
     </node>
-    <node pkg="localization_sp24" type="remove_gravity_node" name="grav_remove" output="screen" />
     <node pkg="tf" type="static_transform_publisher" name="base_link_gx5_45_link_static_transform"
         output="screen" args="0 0 0 0 0 0 base_link gx5_45_link 100" />
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se">

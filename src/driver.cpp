@@ -91,11 +91,12 @@ int main(int argc, char** argv) {
 
     ros::NodeHandle n("~");
 
-    ROS_INFO("Connecting to IMU...");
-
     mscl::Connection connection;
     try {
         connection = mscl::Connection::Serial("/dev/ttyACM0");
+    } catch (mscl::Error_InvalidSerialPort& e) {
+        ROS_ERROR("Failed to open serial port. Is the IMU connected?");
+        return 1;
     } catch (mscl::Error_Connection& e) {
         ROS_ERROR("Failed to connect to IMU. Do you have read/write access?");
         return 1;
@@ -103,8 +104,7 @@ int main(int argc, char** argv) {
 
     mscl::InertialNode node(connection);
 
-    ROS_INFO("Attempting to ping IMU...");
-    ros::Duration ping_timeout = ros::Duration(5);
+    ros::Duration ping_timeout = ros::Duration(5, 0);
     ros::Time start = ros::Time::now();
     ros::Rate ping_rate = ros::Rate(5);
     bool success = false;
@@ -147,7 +147,7 @@ int main(int argc, char** argv) {
     };
 
     for (auto& filter: low_pass_config) {
-        filter.applyLowPassFilter = true;
+        filter.applyLowPassFilter = false;
     }
 
     node.setLowPassFilterSettings(low_pass_config);
