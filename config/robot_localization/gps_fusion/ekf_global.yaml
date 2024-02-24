@@ -15,16 +15,16 @@ imu0_config: [false, false, false, # x, y, z
               false, false, true, # r, p, y
               false, false, false, # vx, vy, vz
               false, false, true, # vr, vp, vy
-              true, true, false] # ax, ay, az
+              true,  true, false] # ax, ay, az
 imu0_remove_gravitational_acceleration: true
 
 # TODO: only velocity better than only position?
 odom0: /odometry/gps
 odom0_config: [true,  true,  false,
-              false, false, false,
-              false, false, false,
-              false, false, false,
-              false, false, false]
+               false, false, false,
+               false, false, false,
+               false, false, false,
+               false, false, false]
 
 # twist0: /gnss_1/velocity
 # twist0_config: [false, false, false,

@@ -3,7 +3,6 @@ delay: 3.0
 magnetic_declination_radians: 0  # Should be handled by the sensor
 yaw_offset: 0  # Yaw is in ENU
 zero_altitude: false
-broadcast_utm_transform: false  # Do we need this transform?
 publish_filtered_gps: true
 use_odometry_yaw: false
 wait_for_datum: false
