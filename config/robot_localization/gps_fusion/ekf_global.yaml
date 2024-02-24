@@ -1,0 +1,37 @@
+frequency: 30
+silent_tf_failure: false
+two_d_mode: true
+publish_tf: true
+permit_corrected_publication: false
+print_diagnostics: true
+
+map_frame: map
+odom_frame: odom
+base_link_frame: base_link
+world_frame: map
+
+imu0: /imu/data
+imu0_config: [false, false, false, # x, y, z
+              false, false, true, # r, p, y
+              false, false, false, # vx, vy, vz
+              false, false, true, # vr, vp, vy
+              true, true, false] # ax, ay, az
+imu0_remove_gravitational_acceleration: true
+
+# TODO: only velocity better than only position?
+odom0: /odometry/gps
+odom0_config: [true,  true,  false,
+              false, false, false,
+              false, false, false,
+              false, false, false,
+              false, false, false]
+
+# twist0: /gnss_1/velocity
+# twist0_config: [false, false, false,
+#                 false, false, false,
+#                 true,  true,  false,
+#                 false, false, false,
+#                 false, false, false]
+
+# TODO: process_noise_covariance
+# TODO: initial_estimate_covariance

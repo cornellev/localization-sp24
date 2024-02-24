@@ -2,10 +2,27 @@
 
 <launch>
     <node pkg="rosbag" type="play" name="rosbag_play" output="screen"
-        args="--clock $(find localization_sp24)/bags/gnss.bag"/>
-    <node pkg="tf" type="static_transform_publisher" name="base_link_gx5_45_link_static_transform"
-        output="screen" args="0 0 0 0 0 0 base_link gx5_45_link 100" />
-    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se">
-        <rosparam command="load" file="$(find localization_sp24)/config/robot_localization/ekf/lord_driver.yaml" />
+        args="--clock $(find localization_sp24)/bags/gnss.bag">
+    </node>
+
+    <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_gx5_45_link_static_transform"
+        output="screen" args="0 0 0 0 0 0 base_link gx5_45_link" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_gx5_45_antenna_link_static_transform"
+        output="screen" args="0 0 0 0 0 0 base_link gx5_45_gnss_1_antenna_link" />
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_global" clear_params="true">
+        <rosparam command="load" file="$(find localization_sp24)/config/robot_localization/gps_fusion/ekf_global.yaml" />
+        <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
+        <remap from="/diagnostics" to="/diagnostics/global"/>
+    </node>
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_local" clear_params="true">
+        <rosparam command="load" file="$(find localization_sp24)/config/robot_localization/gps_fusion/ekf_local.yaml" />
+        <remap from="/odometry/filtered" to="/odometry/filtered/local"/>
+        <remap from="/diagnostics" to="/diagnostics/local"/>
+    </node>
+    <node pkg="robot_localization" type="navsat_transform_node" name="navsat" clear_params="true">
+        <rosparam command="load" file="$(find localization_sp24)/config/robot_localization/gps_fusion/navsat.yaml" />
+        <remap from="/gps/fix" to="/gnss_1/llh_position"/>
+        <remap from="/odometry/filtered" to="/odometry/filtered/global"/>
     </node>
 </launch>
