@@ -1,0 +1,11 @@
+<?xml version="1.1"?>
+
+<launch>
+    <node pkg="rosbag" type="play" name="rosbag_play" output="screen"
+        args="--clock $(find localization_sp24)/bags/gnss.bag"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link_gx5_45_link_static_transform"
+        output="screen" args="0 0 0 0 0 0 base_link gx5_45_link 100" />
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se">
+        <rosparam command="load" file="$(find localization_sp24)/config/lord.yaml" />
+    </node>
+</launch>
