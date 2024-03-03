@@ -10,10 +10,11 @@
 // Ethan's implementation of follow-the-gap, based only on the F1Tenth lecture.
 
 template<size_t N>
-double follow_the_gap(std::array<double, N> scan, double safety_radius) {
+double follow_the_gap(std::array<double, N> scan, double safety_radius,
+    double range) {
     static_assert(N >= 2, "The LIDAR scan must provide at least two points.");
 
-    constexpr double angle_increment = 180.0 / N;
+    const double angle_increment = range / N;
     const long offset = (long)N / 2;
 
     // step 1: find nearest LIDAR point and put a safety bubble around it

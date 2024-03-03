@@ -145,8 +145,14 @@ include_directories(
 add_executable(sim_node src/sim_node.cpp)
 target_link_libraries(sim_node ${catkin_LIBRARIES})
 
-add_executable(lidar_test_node src/lidar_test_node.cpp src/aux/follow_the_gap.cpp)
+add_executable(lidar_test_node src/lidar_test_node.cpp)
 target_link_libraries(lidar_test_node ${catkin_LIBRARIES})
+
+add_executable(follow_the_gap_2d_node src/follow_the_gap_2d_node.cpp 
+  src/aux/follow_the_gap.cpp
+  src/aux/follow_the_gap.h)
+target_link_libraries(follow_the_gap_2d_node ${catkin_LIBRARIES})
+
 
 add_executable(remove_gravity_node src/remove_gravity.cpp)
 target_link_libraries(remove_gravity_node ${catkin_LIBRARIES})
