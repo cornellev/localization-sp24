@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(localization_sp24)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++17)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -153,6 +153,13 @@ add_executable(follow_the_gap_2d_node src/follow_the_gap_2d_node.cpp
   src/aux/follow_the_gap.h)
 target_link_libraries(follow_the_gap_2d_node ${catkin_LIBRARIES})
 
+add_executable(scan_matching_node src/scan_matching_node.cpp 
+  src/aux/scan-matching/src/icp/point_to_point.cpp 
+  src/aux/scan-matching/src/icp/point_to_line.cpp 
+  src/aux/scan-matching/src/icp/icp.cpp 
+)  
+target_include_directories(scan_matching_node PUBLIC src/aux/scan-matching/src)
+target_link_libraries(scan_matching_node ${catkin_LIBRARIES})
 
 add_executable(remove_gravity_node src/remove_gravity.cpp)
 target_link_libraries(remove_gravity_node ${catkin_LIBRARIES})

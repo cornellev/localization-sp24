@@ -37,6 +37,7 @@ int main(int argc, char** argv) {
         }
     } else {
         ROS_INFO("ERROR: could not make subscriber");
+        return 1;
     }
 
     return 0;

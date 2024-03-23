@@ -1,0 +1,3 @@
+[submodule "src/aux/scan-matching"]
+	path = src/aux/scan-matching
+	url = https://github.com/cornellev/scan-matching.git

@@ -1,26 +1,24 @@
 {
-    "version": 4,
     "configurations": [
         {
-            "name": "Linux-arm64",
+            "browse": {
+                "databaseFilename": "${default}",
+                "limitSymbolsToIncludedHeaders": false
+            },
             "includePath": [
-                "${workspaceFolder}/**",
-                "/opt/ros/noetic/include",
-                "/usr/include",
-                "/usr/include/aarch64-linux-gnu",
-                "/usr/include/aarch64-linux-gnu/c++/7"
+                "/home/ethan/cev/lordimu_ws/devel/include/**",
+                "/opt/ros/noetic/include/**",
+                "/home/ethan/cev/lordimu_ws/src/localization-sp24/include/**",
+                "/home/ethan/cev/lordimu_ws/src/microstrain_inertial/microstrain_inertial_driver/include/**",
+                "/home/ethan/cev/lordimu_ws/src/robot_localization/include/**",
+                "/usr/include/**"
             ],
-            "intelliSenseMode": "linux-gcc-arm64"
-        },
-        {
-            "name": "Linux-x64",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "/opt/ros/noetic/include",
-                "/usr/include",
-                "/usr/share/c++-mscl/source"
-            ],
-            "intelliSenseMode": "linux-gcc-x64"
+            "name": "ROS",
+            "intelliSenseMode": "gcc-arm64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "c++14"
         }
-    ]
+    ],
+    "version": 4
 }
