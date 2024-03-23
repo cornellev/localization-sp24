@@ -47,13 +47,14 @@ namespace ethan_tui {
     free(T.b)
 #define tui_keys(T)                                                            \
     T.k = 0;                                                                   \
-    if (poll(&T.p, 1, 5) > 0) read(I, &T.k, 1)
+    if (poll(&T.p, 1, 15) > 0) read(I, &T.k, 1)
+#define tui_flush() tcflush(O, Y(IO))
 #define tui_draw(T)                                                            \
     P(E "[H");                                                                 \
     for (int i = 0; i < T.h; i++) {                                            \
         for (int j = 0; j < T.w; j++) putchar(T.b[i * T.w + j]);               \
         putchar('\n');                                                         \
     }                                                                          \
-    tcflush(O, Y(IO))
+    tui_flush()
 }
 }

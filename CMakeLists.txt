@@ -158,7 +158,7 @@ add_executable(scan_matching_node src/scan_matching_node.cpp
   src/aux/scan-matching/src/icp/point_to_line.cpp 
   src/aux/scan-matching/src/icp/icp.cpp 
 )  
-target_include_directories(scan_matching_node PUBLIC src/aux/scan-matching/src)
+target_include_directories(scan_matching_node PUBLIC src/aux/scan-matching/src src/aux)
 target_link_libraries(scan_matching_node ${catkin_LIBRARIES})
 
 add_executable(remove_gravity_node src/remove_gravity.cpp)
